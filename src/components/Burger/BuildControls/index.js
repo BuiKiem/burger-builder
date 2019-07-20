@@ -1,6 +1,7 @@
-import React from "react"
+import React from "react";
+import PropTypes from "prop-types";
 
-import BuildControl from "./BuildControl"
+import BuildControl from "./BuildControl";
 import classes from "./BuildControls.module.css";
 
 const controls = [
@@ -15,10 +16,18 @@ const buildControls = (props) => (
         {controls.map(control =>
             <BuildControl
                 key={control.label} label={control.label}
-                addIngredientHandler={() => props.addIngredientHandler(control.type)}
+                addIngredient={() => props.addIngredient(control.type)}
+                removeIngredient={() => props.removeIngredient(control.type)}
+                disabled={props.disabled[control.type]}
             />)
         }
     </div>
 );
+
+buildControls.propTypes = {
+    addIngredient: PropTypes.func.isRequired,
+    removeIngredient: PropTypes.func.isRequired,
+    disabled: PropTypes.object.isRequired,
+};
 
 export default buildControls;
