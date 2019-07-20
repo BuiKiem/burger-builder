@@ -22,7 +22,7 @@ const buildControls = (props) => (
                 disabled={props.disabled[control.type]}
             />)
         }
-        <button className={classes.OrderButton}>ORDER NOW</button>
+        <button className={classes.OrderButton} onClick={props.order}>ORDER NOW</button>
     </div>
 );
 
@@ -31,6 +31,7 @@ buildControls.propTypes = {
     removeIngredient: PropTypes.func.isRequired,
     disabled: PropTypes.object.isRequired,
     price: PropTypes.number.isRequired,
+    order: PropTypes.func.isRequired,
 };
 
 export default buildControls;

@@ -23,6 +23,8 @@ class BurgerBuilder extends Component {
             meat: 0,
         },
         totalPrice: 4,
+        canOrder: false,
+        ordering: false,
     };
 
     addIngredientHandler = (type) => {
@@ -58,6 +60,10 @@ class BurgerBuilder extends Component {
         });
     };
 
+    orderHandler = () => {
+        this.setState({ordering: true});
+    };
+
     render() {
         const disabledInfo = {
             ...this.state.ingredients
@@ -67,13 +73,16 @@ class BurgerBuilder extends Component {
         }
         return (
             <Aux>
-                <Modal><OrderSummary ingredients={this.state.ingredients}/></Modal>
+                <Modal show={this.state.ordering}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     addIngredient={this.addIngredientHandler}
                     removeIngredient={this.removeIngredientHandler}
                     disabled={disabledInfo}
                     price={this.state.totalPrice}
+                    order={this.orderHandler}
                 />
             </Aux>
         );
