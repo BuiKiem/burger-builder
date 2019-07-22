@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Aux from "../../../hoc/Aux";
+import Button from "../../UI/Button";
 
 const orderSummary = (props) => {
     const ingredients = Object.keys(props.ingredients)
@@ -19,12 +20,16 @@ const orderSummary = (props) => {
                 {ingredients}
             </ul>
             <p>Continue to Checkout</p>
+            <Button btnType="Danger" clicked={props.cancelHandler}>CANCEL</Button>
+            <Button btnType="Success" clicked={props.continueHandler}>CONTINUE</Button>
         </Aux>
     );
 };
 
 orderSummary.propTypes = {
     ingredients: PropTypes.object.isRequired,
+    cancelHandler: PropTypes.func,
+    continueHandler: PropTypes.func,
 };
 
 export default orderSummary;
