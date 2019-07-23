@@ -1,15 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Aux/Aux";
 import Button from "../../UI/Button";
 
 const orderSummary = (props) => {
     const ingredients = Object.keys(props.ingredients)
         .map(key =>
-            <li>
-                <span key={props.ingredients[key]}
-                      style={{textTransform: 'capitalize'}}>{key}</span>: {props.ingredients[key]}
+            <li key={key}>
+                <span style={{textTransform: 'capitalize'}}>{key}</span>: {props.ingredients[key]}
             </li>
         );
     return (

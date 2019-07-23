@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import classes from "./Modal.module.css";
-import Aux from "../../../hoc/Aux";
+import Aux from "../../../hoc/Aux/Aux";
 import Backdrop from "../Backdrop";
 
 const modal = (props) => (
@@ -25,4 +25,8 @@ modal.propTypes = {
     close: PropTypes.func.isRequired,
 };
 
-export default modal;
+const areEqual = (prevProps, nextProps) => {
+    return prevProps.show === nextProps.show;
+};
+
+export default React.memo(modal, areEqual);
