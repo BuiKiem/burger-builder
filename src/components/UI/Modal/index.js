@@ -25,4 +25,8 @@ modal.propTypes = {
     close: PropTypes.func.isRequired,
 };
 
-export default modal;
+const areEqual = (prevProps, nextProps) => {
+    return prevProps.show === nextProps.show;
+};
+
+export default React.memo(modal, areEqual);
