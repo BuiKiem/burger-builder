@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classes from "./Item.module.css"
 
 const item = (props) => (
-    <li className={classes.NavigationItem}>
+    <li key={props.children} className={classes.NavigationItem}>
         <a href={props.link} className={props.active ? classes.active : null}>{props.children}</a>
     </li>
 );
