@@ -21,12 +21,12 @@ const modal = (props) => (
 );
 
 modal.propTypes = {
-    show: PropTypes.bool.isRequired,
-    close: PropTypes.func.isRequired,
+    show: PropTypes.bool,
+    close: PropTypes.func,
 };
 
 const areEqual = (prevProps, nextProps) => {
-    return prevProps.show === nextProps.show;
+    return !nextProps.show && prevProps.children === nextProps.children;
 };
 
 export default React.memo(modal, areEqual);
