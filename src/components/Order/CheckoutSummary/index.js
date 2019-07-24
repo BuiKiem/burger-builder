@@ -14,14 +14,16 @@ const checkoutSummary = (props) => {
             <div style={{width: '100%', margin: 'auto'}}>
                 <Burger ingredients={props.ingredients} />
             </div>
-            <Button btnType="Danger">CANCEL</Button>
-            <Button btnType="Success">CONTINUE</Button>
+            <Button btnType="Danger" clicked={props.clickCancel}>CANCEL</Button>
+            <Button btnType="Success" clicked={props.clickContinue}>CONTINUE</Button>
         </div>
     );
 };
 
 checkoutSummary.propTypes = {
     ingredients: PropTypes.object,
+    clickCancel: PropTypes.func,
+    clickContinue: PropTypes.func,
 };
 
 export default checkoutSummary;
