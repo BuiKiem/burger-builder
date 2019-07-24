@@ -1,12 +1,15 @@
 import React from 'react';
+
 import Layout from './hoc/Layout';
 import BurgerBuilder from "./containers/BurgerBuilder";
+import Checkout from "./containers/Checkout";
 
 function App() {
     return (
         <div>
             <Layout>
                 <BurgerBuilder />
+                <Checkout />
             </Layout>
         </div>
     );
