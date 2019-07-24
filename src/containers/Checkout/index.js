@@ -1,20 +1,22 @@
 import React from "react";
+import {Route} from "react-router-dom";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary";
+import ContactData from "./ContactData";
 
 class Checkout extends React.Component {
-
     state = {
         ingredients: {
-            salad: 2,
-            meat: 1,
-            cheese: 1,
-            bacon: 1,
+            salad: 0,
+            meat: 0,
+            cheese: 0,
+            bacon: 0,
         },
     };
 
     componentDidMount() {
-        this.setState({ingredients: this.props.location.state});
+        const ingredients = this.props.location.state;
+        if (ingredients) this.setState({ingredients: ingredients});
     }
 
     cancelCheckoutHandler = () => {
@@ -33,6 +35,7 @@ class Checkout extends React.Component {
                     clickCancel={this.cancelCheckoutHandler}
                     clickContinue={this.continueCheckoutHandler}
                 />
+                <Route path={this.props.match.path + "/contact-data"} component={ContactData}/>
             </div>
         );
     }
