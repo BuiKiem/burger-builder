@@ -20,17 +20,19 @@ const INGREDIENT_PRICES = {
 class BurgerBuilder extends Component {
 
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0,
-        },
+        ingredients: null,
         totalPrice: 4,
         canOrder: false,
         ordering: false,
         loading: false,
+        error: false,
     };
+
+    componentDidMount() {
+        axios.get("https://react-my-burger-a92a4.firebaseio.com/ingredients.json")
+            .then((response) => this.setState({ingredients: response.data}))
+            .catch((error) =>  this.setState({error: true}));
+    }
 
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
@@ -103,7 +105,22 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <=0;
         }
 
-        let orderSummary = (
+
+        let burgerBuilder = this.state.ingredients === null ? <Spinner /> : (
+            <React.Fragment>
+                <Burger ingredients={this.state.ingredients} />
+                <BuildControls
+                    addIngredient={this.addIngredientHandler}
+                    removeIngredient={this.removeIngredientHandler}
+                    disabled={disabledInfo}
+                    price={this.state.totalPrice}
+                    order={this.orderHandler}
+                />
+            </React.Fragment>
+        );
+        burgerBuilder = this.state.error ? <p>Ingredients cant be loaded!</p> : burgerBuilder;
+
+        let orderSummary = this.state.ingredients === null ? null : (
             <OrderSummary
                 ingredients={this.state.ingredients}
                 cancelHandler={this.cancelOrderHandler}
@@ -118,14 +135,7 @@ class BurgerBuilder extends Component {
                 <Modal show={this.state.ordering} close={this.cancelOrderHandler}>
                     {orderSummary}
                 </Modal>
-                <Burger ingredients={this.state.ingredients} />
-                <BuildControls
-                    addIngredient={this.addIngredientHandler}
-                    removeIngredient={this.removeIngredientHandler}
-                    disabled={disabledInfo}
-                    price={this.state.totalPrice}
-                    order={this.orderHandler}
-                />
+                {burgerBuilder}
             </Aux>
         );
     }
