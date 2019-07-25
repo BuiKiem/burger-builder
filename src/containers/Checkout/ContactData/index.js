@@ -8,16 +8,28 @@ import classes from "./ContactData.module.css";
 
 import axios from "../../../axios-orders";
 
+const createInputObject = (elementType, config, value) => ({
+    elementType: elementType,
+    config: config,
+    value: value,
+})
+
 class ContactData extends React.Component {
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: '',
+        orderForm: {
+            name: createInputObject('input', {type: 'text', placeholder: 'Your name'}, ''),
+            street: createInputObject('input', {type: 'text', placeholder: 'Your address street'}, ''),
+            zipCode: createInputObject('input', {type: 'text', placeholder: 'ZIP code'}, ''),
+            country: createInputObject('input', {type: 'text', placeholder: 'Country'}, ''),
+            email: createInputObject('input', {type: 'email', placeholder: 'Your email'}, ''),
+            deliveryMethod: createInputObject('select', {options: [
+                {value: "fastest", display: "Fastest"}, {value: "economy", display: "Economy"}]},
+                'fastest'),
         },
         loading: false,
     };
+
+
 
     orderHandler = (event) => {
         event.preventDefault();
@@ -25,15 +37,6 @@ class ContactData extends React.Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
-            customer: {
-                name: 'Customer name',
-                address: {
-                    street: 'Address street',
-                    zipCode: '00000',
-                    country: 'NeverLand',
-                },
-                email: 'customer@example.com',
-            },
             deliveryMethod: 'economy',
         };
         axios.post("/orders.json", order)
