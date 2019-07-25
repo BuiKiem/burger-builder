@@ -1,6 +1,7 @@
 import React from "react";
 
 import Button from "../../../components/UI/Button";
+import Input from "../../../components/UI/Input";
 import Spinner from "../../../components/UI/Spinner";
 
 import classes from "./ContactData.module.css";
@@ -49,10 +50,10 @@ class ContactData extends React.Component {
 
         let form = this.state.loading ? <Spinner/> : (
             <form action=".">
-                <input type="text" name="name" placeholder="Your name" className={classes.Input}/>
-                <input type="email" name="email" placeholder="Your email" className={classes.Input}/>
-                <input type="text" name="street" placeholder="Your address street" className={classes.Input}/>
-                <input type="text" name="postal" placeholder="Your postal code" className={classes.Input}/>
+                <Input inpuType="input" type="text" name="name" placeholder="Your name" />
+                <Input inpuType="input" type="text" name="email" placeholder="Your email" />
+                <Input inpuType="input" type="text" name="street" placeholder="Your address street" />
+                <Input inpuType="input" type="text" name="postal" placeholder="Your postal code" />
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
