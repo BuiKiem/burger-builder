@@ -15,8 +15,13 @@ class Checkout extends React.Component {
     };
 
     componentDidMount() {
-        const ingredients = this.props.location.state;
-        if (ingredients) this.setState({ingredients: ingredients});
+        const extendState = this.props.location.state;
+        if (extendState) {
+            this.setState({
+                ingredients: extendState.ingredients,
+                totalPrice: extendState.totalPrice,
+            });
+        }
     }
 
     cancelCheckoutHandler = () => {
@@ -35,7 +40,7 @@ class Checkout extends React.Component {
                     clickCancel={this.cancelCheckoutHandler}
                     clickContinue={this.continueCheckoutHandler}
                 />
-                <Route path={this.props.match.path + "/contact-data"} component={ContactData}/>
+                <Route path={this.props.match.path + "/contact-data"} render={(props) => <ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} {...props} />}/>
             </div>
         );
     }
