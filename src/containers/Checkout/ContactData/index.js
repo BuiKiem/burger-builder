@@ -29,7 +29,16 @@ class ContactData extends React.Component {
         loading: false,
     };
 
+    inputChangedHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {...this.state.orderForm};
+        const updatedElement = {
+            ...updatedOrderForm[inputIdentifier],
+            value: event.target.value,
+        };
+        updatedOrderForm[inputIdentifier] = updatedElement;
 
+        this.setState({orderForm: updatedOrderForm});
+    };
 
     orderHandler = (event) => {
         event.preventDefault();
@@ -66,6 +75,7 @@ class ContactData extends React.Component {
                         elementType={element.config.elementType}
                         elementConfig={element.config.config}
                         value={element.config.value}
+                        onChange={(event) => this.inputChangedHandler(event, element.id)}
                     />)
                 }
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
