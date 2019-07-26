@@ -26,7 +26,7 @@ const input = (props) => {
 };
 
 input.propTypes = {
-    inputType: PropTypes.string,
+    elementType: PropTypes.string,
 }
 
 export default input;

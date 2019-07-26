@@ -50,13 +50,24 @@ class ContactData extends React.Component {
     };
     
     render() {
+        const formElements = [];
+        for (let key in this.state.orderForm) {
+            formElements.push({
+                id: key,
+                config: this.state.orderForm[key],
+            });
+        }
 
         let form = this.state.loading ? <Spinner/> : (
             <form action=".">
-                <Input inpuType="input" type="text" name="name" placeholder="Your name" />
-                <Input inpuType="input" type="text" name="email" placeholder="Your email" />
-                <Input inpuType="input" type="text" name="street" placeholder="Your address street" />
-                <Input inpuType="input" type="text" name="postal" placeholder="Your postal code" />
+                {formElements.map((element) =>
+                    <Input
+                        key={element.id}
+                        elementType={element.config.elementType}
+                        elementConfig={element.config.config}
+                        value={element.config.value}
+                    />)
+                }
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
