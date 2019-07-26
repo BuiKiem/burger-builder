@@ -8,20 +8,22 @@ import classes from "./ContactData.module.css";
 
 import axios from "../../../axios-orders";
 
-const createInputObject = (elementType, config, value) => ({
+const createInputObject = (elementType, config, value, validation) => ({
     elementType: elementType,
     config: config,
     value: value,
+    validation: validation,
+    valid: false
 })
 
 class ContactData extends React.Component {
     state = {
         orderForm: {
-            name: createInputObject('input', {type: 'text', placeholder: 'Your name'}, ''),
-            street: createInputObject('input', {type: 'text', placeholder: 'Your address street'}, ''),
-            zipCode: createInputObject('input', {type: 'text', placeholder: 'ZIP code'}, ''),
-            country: createInputObject('input', {type: 'text', placeholder: 'Country'}, ''),
-            email: createInputObject('input', {type: 'email', placeholder: 'Your email'}, ''),
+            name: createInputObject('input', {type: 'text', placeholder: 'Your name'}, '', {required: true}),
+            street: createInputObject('input', {type: 'text', placeholder: 'Your address street'}, '', {required: true}),
+            zipCode: createInputObject('input', {type: 'text', placeholder: 'ZIP code'}, '', {required: true, minLength: 5, maxLength: 5}),
+            country: createInputObject('input', {type: 'text', placeholder: 'Country'}, '', {required: true}),
+            email: createInputObject('input', {type: 'email', placeholder: 'Your email'}, '', {required: true}),
             deliveryMethod: createInputObject('select', {options: [
                 {value: "fastest", display: "Fastest"}, {value: "economy", display: "Economy"}]},
                 'fastest'),
@@ -34,6 +36,7 @@ class ContactData extends React.Component {
         const updatedElement = {
             ...updatedOrderForm[inputIdentifier],
             value: event.target.value,
+            valid: this.checkValidity(event.target.value, updatedOrderForm[inputIdentifier].validation),
         };
         updatedOrderForm[inputIdentifier] = updatedElement;
 
@@ -60,6 +63,16 @@ class ContactData extends React.Component {
             .catch((error) => {
                 this.setState({loading: false, ordering: false});
             });
+    };
+
+    checkValidity(value, rule) {
+        let isValid = false;
+
+        if (rule.required) isValid = value.trim() !== "";
+        if (rule.minLength) isValid = value.length >= rule.minLength;
+        if (rule.maxLength) isValid = value.length <= rule.maxLength;
+
+        return isValid
     };
     
     render() {
