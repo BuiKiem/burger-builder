@@ -43,10 +43,14 @@ class ContactData extends React.Component {
     orderHandler = (event) => {
         event.preventDefault();
         this.setState({loading: true});
+        const formData = {};
+        for (let elementIdentifier in this.state.orderForm) {
+            formData[elementIdentifier] = this.state.orderForm[elementIdentifier];
+        }
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
-            deliveryMethod: 'economy',
+            order: formData,
         };
         axios.post("/orders.json", order)
             .then((response) => {
@@ -68,7 +72,7 @@ class ContactData extends React.Component {
         }
 
         let form = this.state.loading ? <Spinner/> : (
-            <form action=".">
+            <form onSubmit={this.orderHandler}>
                 {formElements.map((element) =>
                     <Input
                         key={element.id}
