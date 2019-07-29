@@ -8,12 +8,12 @@ import classes from "./ContactData.module.css";
 
 import axios from "../../../axios-orders";
 
-const createInputObject = (elementType, config, value, validation) => ({
+const createInputObject = (elementType, config, value, validation, valid=false) => ({
     elementType: elementType,
     config: config,
     value: value,
     validation: validation,
-    valid: false,
+    valid: valid,
     touched: false,
 });
 
@@ -27,8 +27,9 @@ class ContactData extends React.Component {
             email: createInputObject('input', {type: 'email', placeholder: 'Your email'}, '', {required: true}),
             deliveryMethod: createInputObject('select', {options: [
                 {value: "fastest", display: "Fastest"}, {value: "economy", display: "Economy"}]},
-                'fastest'),
+                'fastest', {}, true),
         },
+        formIsValid: false,
         loading: false,
     };
 
@@ -42,7 +43,10 @@ class ContactData extends React.Component {
         };
         updatedOrderForm[inputIdentifier] = updatedElement;
 
-        this.setState({orderForm: updatedOrderForm});
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     };
 
     orderHandler = (event) => {
@@ -106,7 +110,7 @@ class ContactData extends React.Component {
                         touched={element.config.touched}
                     />)
                 }
-                <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+                <Button btnType="Success" clicked={this.orderHandler} disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
 
