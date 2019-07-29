@@ -14,7 +14,8 @@ const createInputObject = (elementType, config, value, validation) => ({
     value: value,
     validation: validation,
     valid: false,
-})
+    touched: false,
+});
 
 class ContactData extends React.Component {
     state = {
@@ -37,6 +38,7 @@ class ContactData extends React.Component {
             ...updatedOrderForm[inputIdentifier],
             value: event.target.value,
             valid: this.checkValidity(event.target.value, updatedOrderForm[inputIdentifier].validation),
+            touched: true,
         };
         updatedOrderForm[inputIdentifier] = updatedElement;
 
@@ -70,7 +72,7 @@ class ContactData extends React.Component {
 
         if (rule.required) {
             isValid = value.trim() !== "" && isValid;
-        };
+        }
         if (rule.minLength) {
             isValid = value.length >= rule.minLength && isValid;
         }
@@ -101,6 +103,7 @@ class ContactData extends React.Component {
                         onChange={(event) => this.inputChangedHandler(event, element.id)}
                         invalid={!element.config.valid}
                         shouldValidate={element.config.validation}
+                        touched={element.config.touched}
                     />)
                 }
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>

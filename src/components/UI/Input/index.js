@@ -7,7 +7,7 @@ const input = (props) => {
     let inputJSX = null;
 
     const inputElementClasses = [classes.InputElement];
-    if (props.invalid && props.shouldValidate) inputElementClasses.push(classes.Invalid);
+    if (props.invalid && props.shouldValidate && props.touched) inputElementClasses.push(classes.Invalid);
 
     switch (props.elementType) {
         case ("input"):
@@ -39,6 +39,7 @@ input.propTypes = {
     elementType: PropTypes.string,
     invalid: PropTypes.bool,
     shouldValidate: PropTypes.bool,
+    touched: PropTypes.bool,
 }
 
 export default input;
