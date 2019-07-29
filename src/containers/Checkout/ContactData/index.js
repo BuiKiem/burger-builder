@@ -66,13 +66,13 @@ class ContactData extends React.Component {
     };
 
     checkValidity(value, rule) {
-        let isValid = false;
+        let isValid = true;
 
-        if (rule.required) isValid = value.trim() !== "";
-        if (rule.minLength) isValid = value.length >= rule.minLength;
-        if (rule.maxLength) isValid = value.length <= rule.maxLength;
+        if (rule.required) isValid = value.trim() !== "" && isValid;
+        if (rule.minLength) isValid = value.length >= rule.minLength && isValid;
+        if (rule.maxLength) isValid = value.length <= rule.maxLength && isValid;
 
-        return isValid
+        return isValid;
     };
     
     render() {
