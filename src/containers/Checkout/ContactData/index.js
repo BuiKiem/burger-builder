@@ -13,7 +13,7 @@ const createInputObject = (elementType, config, value, validation) => ({
     config: config,
     value: value,
     validation: validation,
-    valid: false
+    valid: false,
 })
 
 class ContactData extends React.Component {
@@ -65,12 +65,18 @@ class ContactData extends React.Component {
             });
     };
 
-    checkValidity(value, rule) {
+    checkValidity = (value, rule) => {
         let isValid = true;
 
-        if (rule.required) isValid = value.trim() !== "" && isValid;
-        if (rule.minLength) isValid = value.length >= rule.minLength && isValid;
-        if (rule.maxLength) isValid = value.length <= rule.maxLength && isValid;
+        if (rule.required) {
+            isValid = value.trim() !== "" && isValid;
+        };
+        if (rule.minLength) {
+            isValid = value.length >= rule.minLength && isValid;
+        }
+        if (rule.maxLength) {
+            isValid = value.length <= rule.maxLength && isValid;
+        }
 
         return isValid;
     };
@@ -93,6 +99,8 @@ class ContactData extends React.Component {
                         elementConfig={element.config.config}
                         value={element.config.value}
                         onChange={(event) => this.inputChangedHandler(event, element.id)}
+                        invalid={!element.config.valid}
+                        shouldValidate={element.config.validation}
                     />)
                 }
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
