@@ -28,11 +28,11 @@ class BurgerBuilder extends Component {
         error: false,
     };
 
-    componentDidMount() {
-        axios.get("https://react-my-burger-a92a4.firebaseio.com/ingredients.json")
-            .then((response) => this.setState({ingredients: response.data}))
-            .catch((error) =>  this.setState({error: true}));
-    }
+    // componentDidMount() {
+    //     axios.get("https://react-my-burger-a92a4.firebaseio.com/ingredients.json")
+    //         .then((response) => this.setState({ingredients: response.data}))
+    //         .catch((error) =>  this.setState({error: true}));
+    // }
 
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
